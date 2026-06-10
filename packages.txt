@@ -1,2 +1,1 @@
-# Streamlit Cloud 系统依赖（通过 apt-get 安装）
 ffmpeg
