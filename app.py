@@ -391,7 +391,6 @@ with st.sidebar:
 # 主界面
 # ─────────────────────────────────────────────
 st.markdown('<div class="main-title">🎓 课堂实录评分工具</div>', unsafe_allow_html=True)
-st.markdown('<div class="sub-title">基于《不同班型教师画像+评分标准（L7-L9）》 · 支持批量视频上传</div>', unsafe_allow_html=True)
 
 # 侧边栏未展开时显示提示
 st.markdown("""
