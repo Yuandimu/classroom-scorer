@@ -1,0 +1,16 @@
+[server]
+# Streamlit Cloud 服务器配置
+maxUploadSize = 800        # 最大上传 800MB（云端免费版可自定义，1GB 以下均可）
+enableXsrfProtection = true
+enableCORS = true
+
+[browser]
+gatherUsageStats = false
+serverAddress = "0.0.0.0"
+
+[theme]
+primaryColor = "#4a90e2"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f8f9fa"
+textColor = "#1a1a2e"
+font = "sans serif"
