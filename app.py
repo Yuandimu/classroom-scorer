@@ -18,6 +18,10 @@ from rubric import RUBRIC, get_grade, get_grade_color
 # ─────────────────────────────────────────────
 # 云端部署：从 Streamlit Secrets 读取默认配置
 # ─────────────────────────────────────────────
+def is_running_on_cloud():
+    """检测是否运行在 Streamlit Cloud 上"""
+    return os.path.exists("/mount/src")
+
 def get_default_api_key():
     """优先返回用户在界面输入的 key，其次从 secrets 读取默认值"""
     try:
@@ -254,13 +258,17 @@ with st.sidebar:
     
     st.markdown("### 🔑 API 设置")
     
-    # 接口预设选择
+    # 接口预设选择（云端自动隐藏 Ollama）
+    on_cloud = is_running_on_cloud()
+    preset_options = list(PRESET_CONFIGS.keys())
+    if on_cloud:
+        preset_options = [k for k in preset_options if "Ollama" not in k]
     preset_name = st.selectbox(
         "选择接口",
-        options=list(PRESET_CONFIGS.keys()),
+        options=preset_options,
         index=0,  # 默认 DeepSeek
         key="preset_name_select",
-        help="选择 Ollama 可完全本地运行，无需任何 API Key"
+        help="选择 Ollama 可完全本地运行，无需任何 API Key" if not on_cloud else "云端部署仅展示在线 API 接口"
     )
     preset = PRESET_CONFIGS[preset_name]
     st.caption(f"ℹ️ {preset['note']}")
@@ -515,7 +523,10 @@ with tab_upload:
         )
         
         if need_key and not api_key:
-            st.info("💡 **没有 API Key？**\n\n左侧切换为「🤖 Ollama（本地，免费）」，安装后即可完全免费使用！")
+            if on_cloud:
+                st.info("💡 **没有 API Key？**\n\n前往 [DeepSeek 开放平台](https://platform.deepseek.com) 免费注册获取，新用户赠送额度。填入左侧即可使用。")
+            else:
+                st.info("💡 **没有 API Key？**\n\n左侧切换为「🤖 Ollama（本地，免费）」，安装后即可完全免费使用！")
         
         st.markdown("---")
         st.markdown("**📋 评分流程：**")
