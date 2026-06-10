@@ -501,10 +501,10 @@ with tab_upload:
         
         # 评分按钮
         key_ok = (not need_key) or bool(api_key)
-    has_content = (
-        (uploaded_files and len([f for f in uploaded_files if f.size < 800 * 1024 * 1024]) > 0)
-        or (manual_text_mode and manual_transcript and manual_filename)
-    )
+        has_content = (
+            (uploaded_files and len([f for f in uploaded_files if f.size < 800 * 1024 * 1024]) > 0)
+            or (manual_text_mode and manual_transcript and manual_filename)
+        )
         btn_disabled = not key_ok or not has_content
         
         start_btn = st.button(
